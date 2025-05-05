@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import { Task } from './Task';
 import { TasksCollection } from '../api/TasksCollection';
@@ -6,22 +6,50 @@ import { TaskForm } from "./TaskForm";
 
 export const App = () => {
   const isLoading = useSubscribe('tasks');
-  const tasks = useTracker(() => TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch());
+
   const handleToggleChecked = ({ _id, isChecked }) => Meteor.callAsync("tasks.toggleChecked", { _id, isChecked });
+  const handleDelete = ({ _id }) => Meteor.callAsync("tasks.delete", { _id });
+  
+  const [hideCompleted, setHideCompleted] = useState(false);
+  const hideCompletedFilter = { isChecked: { $ne: true } };
+
+  const tasks = useTracker(() =>
+    TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
+      sort: { createdAt: -1 },
+    }).fetch());
 
   if (isLoading()) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Welcome to Meteor !</h1>
+    <div className="app">
+      <header>
+        <div className="app-bar">
+          <div className="app-header">
+            <h1>📝️ To Do List</h1>
+          </div>
+        </div>
+      </header>
+      <div className="main">
+        <TaskForm />
+        <div className="filter">
+          <button onClick={() => setHideCompleted(!hideCompleted)}>
+            {hideCompleted ? 'Show All' : 'Hide Completed'}
+          </button>
+        </div>
 
-      <TaskForm />
-
-      <ul>
-        {tasks.map(task => <Task key={task._id} task={task} onCheckboxClick={handleToggleChecked} />)}
-      </ul>
+        <ul className="tasks">
+          {tasks.map((task) => (
+            <Task
+              key={task._id}
+              task={task}
+              onCheckboxClick={handleToggleChecked}
+              onDeleteClick={handleDelete}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
