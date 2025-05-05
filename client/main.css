@@ -1,21 +1,30 @@
+/**
+ * Main stylesheet for the Meteor/React application.
+ * Defines global styles, layout, and component-specific styling.
+ * Uses a gradient background and responsive flexbox layout.
+ */
+
+/* Global body styles */
 body {
   font-family: sans-serif;
   background-color: #315481;
   background-image: linear-gradient(to bottom, #315481, #918e82 100%);
-  background-attachment: fixed;
-
+  background-attachment: fixed; /* Fixed gradient background */
+  
+  /* Full viewport coverage */
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-
+  
+  /* Reset default margins and padding */
   padding: 0;
   margin: 0;
-
   font-size: 14px;
 }
 
+/* Button base styles */
 button {
   font-weight: bold;
   font-size: 1em;
@@ -27,22 +36,25 @@ button {
 }
 
 button:focus {
-  outline: 0;
+  outline: 0; /* Remove default focus outline */
 }
 
+/* Main application container */
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
 }
 
+/* Header section styles */
 .app-header {
   flex-grow: 1;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* Handle long text with ellipsis */
 }
 
+/* Main content area */
 .main {
   display: flex;
   flex-direction: column;
@@ -51,12 +63,14 @@ button:focus {
   background: white;
 }
 
+/* Hide scrollbar in main content area */
 .main::-webkit-scrollbar {
   width: 0;
   height: 0;
   background: inherit;
 }
 
+/* Header component styles */
 header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
@@ -65,9 +79,10 @@ header {
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
 }
 
+/* App bar layout */
 .app-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between title and other elements */
 }
 
 .app-bar h1 {
@@ -77,6 +92,7 @@ header {
   margin-right: 1em;
 }
 
+/* Task form styles */
 .task-form {
   display: flex;
   margin: 16px;
@@ -100,9 +116,10 @@ header {
 .task-form > button {
   min-width: 100px;
   height: 95%;
-  background-color: #315481;
+  background-color: #315481; /* Primary button color */
 }
 
+/* Task list styles */
 .tasks {
   list-style-type: none;
   padding-inline-start: 0;
@@ -115,24 +132,32 @@ header {
 .tasks > li {
   display: flex;
   padding: 16px;
-  border-bottom: #eee solid 1px;
+  border-bottom: #eee solid 1px; /* Divider between tasks */
   align-items: center;
 }
 
 .tasks > li > span {
-  flex-grow: 1;
+  flex-grow: 1; /* Task text takes available space */
 }
 
 .tasks > li > button {
   justify-self: flex-end;
-  background-color: #ff3046;
+  background-color: #ff3046; /* Delete button color */
 }
 
+/* Filter controls */
 .filter {
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Center filter buttons */
 }
 
 .filter > button {
-  background-color: #62807e;
+  background-color: #62807e; /* Secondary button color */
 }
+
+/* Color Scheme:
+   - Primary blue: #315481
+   - Secondary teal: #62807e
+   - Delete red: #ff3046
+   - Header gradient: #d0edf5 to #e1e5f0
+   - Background gradient: #315481 to #918e82 */
